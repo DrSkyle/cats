@@ -16,7 +16,6 @@ mod camera;
 #[wasm_bindgen]
 pub fn run() {
     App::new()
-    App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 // Explicitly target a canvas with ID "bevy" to ensure correct attaching
