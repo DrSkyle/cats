@@ -15,7 +15,12 @@ mod camera;
 
 #[wasm_bindgen]
 pub fn run() {
+    // 1. Hook panics to the console so we can see them
+    #[cfg(target_arch = "wasm32")]
+    console_error_panic_hook::set_once();
+
     App::new()
+        .insert_resource(ClearColor(Color::srgb(0.53, 0.81, 0.92))) // Sky Blue
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 // Explicitly target a canvas with ID "bevy" to ensure correct attaching

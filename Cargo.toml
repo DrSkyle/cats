@@ -20,6 +20,7 @@ egui_plot = "0.29" # Matching egui version for bevy_egui 0.31 presumably
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.3", features = ["wasm_js"] }
+console_error_panic_hook = "0.1"
 
 [profile.dev]
 opt-level = 1
