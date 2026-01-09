@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CATS | Bio-Sim</title>
-    <style>body { margin: 0; background: #111; overflow: hidden; }</style>
+    <style>
+      body {
+        margin: 0;
+        background: #111;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
+    <div
+      id="loading"
+      style="
+        color: white;
+        font-family: monospace;
+        padding: 20px;
+        font-size: 24px;
+      "
+    >
+      Initializing Bio-Simulation...<br />
+      <span style="font-size: 16px; color: #888">(This may take a moment)</span>
+    </div>
+
     <script type="module">
       import init from "./pkg/cats.js";
-      init().catch(console.error);
+
+      const loading = document.getElementById("loading");
+
+      init()
+        .then(() => {
+          loading.style.display = "none";
+        })
+        .catch((err) => {
+          console.error(err);
+          loading.style.color = "red";
+          loading.innerHTML =
+            "CRITICAL FAILURE:<br>" +
+            err +
+            "<br><br>Check console for details.";
+        });
+
+      // Global error trap for resource loading failures
+      window.addEventListener("error", (e) => {
+        const msg = e.message || "Unknown Error";
+        if (msg.includes("404")) {
+          const log = document.createElement("div");
+          log.style.color = "orange";
+          log.innerText =
+            "Warning: Resource not found: " + (e.filename || "unknown file");
+          document.body.appendChild(log);
+        }
+      });
     </script>
   </body>
 </html>
