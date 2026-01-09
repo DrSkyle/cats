@@ -17,6 +17,8 @@ pub struct MetaballMaterial {
     pub color: LinearRgba,
     #[uniform(0)]
     pub threshold: f32,
+    #[uniform(0)]
+    pub _padding: Vec3, // Pad to 32 bytes (16 + 4 + 12 = 32)
     // Add more uniforms for sphere positions/counts if doing raymarching in frag shader
 }
 

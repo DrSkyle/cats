@@ -5,6 +5,7 @@
 struct MetaballMaterial {
     color: vec4<f32>,
     threshold: f32,
+    _padding: vec3<f32>,
 };
 
 @group(2) @binding(0)
