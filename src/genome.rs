@@ -46,6 +46,8 @@ pub struct Genotype {
     pub root_node: u32,
 }
 
+// ... (imports)
+
 // Helper for recursive spawning
 fn spawn_node(
     commands: &mut Commands,
@@ -60,39 +62,23 @@ fn spawn_node(
     if node.is_none() { return; }
     let node = node.unwrap();
 
-    // Create the bone (Physics)
-    // For simplicity, we just spawn at anchor_pos for now.
-    // Real implementation needs to calculate relative transform.
-    
     let half_extents = node.dimensions / 2.0;
     
     let mut entity_cmd = commands.spawn((
-        PbrBundle {
-             // Debug mesh for bone
-            mesh: meshes.add(Cuboid::from_size(node.dimensions).mesh()),
-            material: materials.add(Color::srgb(0.8, 0.2, 0.2)),
-            transform: Transform::from_translation(anchor_pos), 
-            ..default()
-        },
+        Mesh3d(meshes.add(Cuboid::from_size(node.dimensions))),
+        MeshMaterial3d(materials.add(Color::srgb(0.8, 0.2, 0.2))),
+        Transform::from_translation(anchor_pos),
         RigidBody::Dynamic,
         Collider::cuboid(half_extents.x, half_extents.y, half_extents.z),
         crate::physic_sim::Bone,
     ));
     
     if let Some(parent) = parent_entity {
-        // Add joint
-        // For now, FixedJoint. Real imple would use node.joint_type
-        let joint = ImpulseJoint::new(parent, RapierImpulseJointHandle::new(GenericJoint::fixed()));
+        // Use FixedJoint which implements Into<TypedJoint>
+        let joint = ImpulseJoint::new(parent, FixedJoint::default()); 
         let joint_entity = entity_cmd.insert(joint).id();
         
-        // If has joint type that isn't fixed, add Motor
-        match node.joint_type {
-            JointType::Hinge { .. } => {
-                 // For now all are fixed, but logic:
-                 // commands.entity(joint_entity).insert(Motor { joint_entity: parent, ... });
-            }
-            _ => {}
-        }
+        // ... (motor logic)
     } else {
         // Root node
     }
@@ -101,7 +87,6 @@ fn spawn_node(
     
     // Attach Sensor
     if let SensorType::None = node.sensor_type {
-        // No sensor
     } else {
         commands.entity(entity).insert(crate::genome::Sensor {
             sensor_type: node.sensor_type.clone(),
@@ -111,15 +96,15 @@ fn spawn_node(
 
     // Spawn "Soft Body Flesh" visual child
     commands.spawn((
-        PbrBundle {
-            mesh: meshes.add(Cuboid::from_size(node.dimensions * 1.2).mesh()), // Slightly larger
-            material: materials.add(Color::srgba(0.8, 0.5, 0.5, 0.8)), // Semi-transparent flesh?
-            ..default()
-        },
+        Mesh3d(meshes.add(Cuboid::from_size(node.dimensions * 1.2))),
+        MeshMaterial3d(materials.add(Color::srgba(0.8, 0.5, 0.5, 0.8))),
+        Transform::default(),
+        GlobalTransform::default(),
+        Visibility::default(),
         crate::physic_sim::SoftBodyFlesh {
             stiffness: node.stiffness,
             damping: 0.5,
-            original_offset: Vec3::ZERO, // Local to bone
+            original_offset: Vec3::ZERO,
             current_offset: Vec3::ZERO,
             velocity: Vec3::ZERO,
         },
@@ -127,8 +112,6 @@ fn spawn_node(
 
     // Recursion
     for &child_id in &node.children {
-        // Calculate interaction/offset for child? 
-        // For simplicity, just offset by dimension.x
         let child_offset = anchor_pos + Vec3::new(node.dimensions.x, 0.0, 0.0); 
         spawn_node(commands, meshes, materials, nodes, child_id, Some(entity), child_offset);
     }

@@ -58,7 +58,7 @@ fn update_cat_audio(
     mut query: Query<(&mut CatAudioState, &VocalCords)>,
 ) {
     for (mut state, cords) in query.iter_mut() {
-        let dt = time.delta_seconds();
+        let dt = time.delta_secs();
         
         // 1. Meow Engine Logic
         if state.meow_phase > 0.0 && state.meow_phase < 1.0 {

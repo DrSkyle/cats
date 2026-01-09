@@ -55,7 +55,7 @@ impl VoxelGrid {
 }
 
 fn decay_pheromones(mut grid: ResMut<VoxelGrid>, time: Res<Time>) {
-    let _dt = time.delta_seconds();
+    let _dt = time.delta_secs();
     // Decay factor per frame? Or per second?
     // User said "value *= 0.99". Let's assume per tick for simplicity or adjust for dt.
     // 0.99 at 60fps is fast decay. Let's do 0.99 per second? 

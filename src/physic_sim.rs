@@ -36,7 +36,7 @@ fn soft_body_jiggle(
     mut query: Query<(&GlobalTransform, &Children)>, 
     mut flesh_query: Query<(&mut Transform, &mut SoftBodyFlesh), Without<Bone>>,
 ) {
-    let dt = time.delta_seconds();
+    let dt = time.delta_secs();
 
     for (_bone_transform, children) in query.iter_mut() {
         for child in children.iter() {
@@ -66,7 +66,7 @@ fn metabolic_tick(
     time: Res<Time>,
     mut query: Query<(&mut Metabolism, &Velocity)>,
 ) {
-    let dt = time.delta_seconds();
+    let dt = time.delta_secs();
     
     for (mut metabolism, velocity) in query.iter_mut() {
         let speed = velocity.linvel.length();

@@ -52,8 +52,14 @@ pub fn brain_system(
         brain.hidden_neurons.fill(0.0);
         brain.output_neurons.fill(0.0);
 
+        // Reserving this for potential performance logic
+        // let synapses = &brain.synapses; 
+        
+        // Fix: Clone synapses for iteration to avoid borrow checker errors with brain.hidden_neurons
+        let synapses = brain.synapses.clone();
+
         // Propagate signals
-        for synapse in &brain.synapses {
+        for synapse in &synapses {
             let input_val = match synapse.from_layer {
                 LayerType::Input => brain.input_neurons.get(synapse.from_index).cloned().unwrap_or(0.0),
                 LayerType::Hidden => brain.hidden_neurons.get(synapse.from_index).cloned().unwrap_or(0.0),

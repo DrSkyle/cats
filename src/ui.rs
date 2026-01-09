@@ -40,7 +40,7 @@ fn render_dashboard(
         
         ui.separator();
         ui.heading("Statistics");
-        ui.label(format!("Time: {:.2}", time.elapsed_seconds()));
+        ui.label(format!("Time: {:.2}", time.elapsed_secs()));
         
         // Placeholder for Graph
         use egui_plot::{Line, Plot, PlotPoints};
