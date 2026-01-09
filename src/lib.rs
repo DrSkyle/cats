@@ -16,7 +16,19 @@ mod camera;
 #[wasm_bindgen]
 pub fn run() {
     App::new()
-        .add_plugins(DefaultPlugins)
+    App::new()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                // Explicitly target a canvas with ID "bevy" to ensure correct attaching
+                canvas: Some("#bevy".into()), 
+                // Fill the parent (body)
+                fit_canvas_to_parent: true,
+                // Handle events
+                prevent_default_event_handling: false,
+                ..default()
+            }),
+            ..default()
+        }))
         .add_plugins(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugins(RapierDebugRenderPlugin::default())
         .add_plugins(EguiPlugin)
@@ -37,6 +49,12 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+    // Ambient Light (Global Illumination ensuring nothing is pitch black)
+    commands.insert_resource(AmbientLight {
+        color: Color::WHITE,
+        brightness: 1000.0,
+    });
+
     // Plane
     commands.spawn((
         Mesh3d(meshes.add(Plane3d::default().mesh().size(50.0, 50.0))),
