@@ -300,6 +300,14 @@ if (!('encodeInto' in cachedTextEncoder)) {
 
 let WASM_VECTOR_LEN = 0;
 
+function wasm_bindgen__convert__closures_____invoke__h1bbf50a35efb5d62(arg0, arg1, arg2) {
+    wasm.wasm_bindgen__convert__closures_____invoke__h1bbf50a35efb5d62(arg0, arg1, arg2);
+}
+
+function wasm_bindgen__convert__closures_____invoke__he65f689ee506eec0(arg0, arg1, arg2, arg3) {
+    wasm.wasm_bindgen__convert__closures_____invoke__he65f689ee506eec0(arg0, arg1, arg2, arg3);
+}
+
 function wasm_bindgen__convert__closures_____invoke__h0d725392e12bfb39(arg0, arg1, arg2) {
     wasm.wasm_bindgen__convert__closures_____invoke__h0d725392e12bfb39(arg0, arg1, arg2);
 }
@@ -308,24 +316,16 @@ function wasm_bindgen__convert__closures_____invoke__h23959bc58e1e4dc7(arg0, arg
     wasm.wasm_bindgen__convert__closures_____invoke__h23959bc58e1e4dc7(arg0, arg1, arg2);
 }
 
-function wasm_bindgen__convert__closures_____invoke__he65f689ee506eec0(arg0, arg1, arg2, arg3) {
-    wasm.wasm_bindgen__convert__closures_____invoke__he65f689ee506eec0(arg0, arg1, arg2, arg3);
-}
-
-function wasm_bindgen__convert__closures_____invoke__h0d99fd9f9469cdbb(arg0, arg1, arg2) {
-    wasm.wasm_bindgen__convert__closures_____invoke__h0d99fd9f9469cdbb(arg0, arg1, isLikeNone(arg2) ? 0 : addToExternrefTable0(arg2));
-}
-
-function wasm_bindgen__convert__closures_____invoke__h1bbf50a35efb5d62(arg0, arg1, arg2) {
-    wasm.wasm_bindgen__convert__closures_____invoke__h1bbf50a35efb5d62(arg0, arg1, arg2);
-}
-
 function wasm_bindgen__convert__closures_____invoke__h33091d4a47b2d821(arg0, arg1) {
     wasm.wasm_bindgen__convert__closures_____invoke__h33091d4a47b2d821(arg0, arg1);
 }
 
 function wasm_bindgen__convert__closures_____invoke__hcd2f4914dca0ad89(arg0, arg1) {
     wasm.wasm_bindgen__convert__closures_____invoke__hcd2f4914dca0ad89(arg0, arg1);
+}
+
+function wasm_bindgen__convert__closures_____invoke__h0d99fd9f9469cdbb(arg0, arg1, arg2) {
+    wasm.wasm_bindgen__convert__closures_____invoke__h0d99fd9f9469cdbb(arg0, arg1, isLikeNone(arg2) ? 0 : addToExternrefTable0(arg2));
 }
 
 const __wbindgen_enum_GamepadMappingType = ["", "standard"];
