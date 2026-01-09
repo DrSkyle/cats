@@ -19,7 +19,7 @@ wasm-bindgen = "0.2"
 egui_plot = "0.29" # Matching egui version for bevy_egui 0.31 presumably
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-getrandom = { version = "0.2", features = ["js"] }
+getrandom = { version = "0.3", features = ["wasm_js"] }
 
 [profile.dev]
 opt-level = 1
