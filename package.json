@@ -1,0 +1,15 @@
+{
+  "name": "cats",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "cats_bg.wasm",
+    "cats.js",
+    "cats.d.ts"
+  ],
+  "main": "cats.js",
+  "types": "cats.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
