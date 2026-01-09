@@ -31,7 +31,8 @@
       async function run() {
         try {
           // Dynamic import catches the 404 if the JS file itself is missing
-          const module = await import("./pkg/cats.js");
+          // Flattened structure: pkg contents are now at root
+          const module = await import("./cats.js");
           const init = module.default;
           await init();
           loading.style.display = "none";
