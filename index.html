@@ -26,22 +26,25 @@
     </div>
 
     <script type="module">
-      import init from "./pkg/cats.js";
-
       const loading = document.getElementById("loading");
 
-      init()
-        .then(() => {
+      async function run() {
+        try {
+          // Dynamic import catches the 404 if the JS file itself is missing
+          const module = await import("./pkg/cats.js");
+          const init = module.default;
+          await init();
           loading.style.display = "none";
-        })
-        .catch((err) => {
+        } catch (err) {
           console.error(err);
           loading.style.color = "red";
           loading.innerHTML =
-            "CRITICAL FAILURE:<br>" +
+            "CRITICAL FAILURE (Load):<br>" +
             err +
             "<br><br>Check console for details.";
-        });
+        }
+      }
+      run();
 
       // Global error trap for resource loading failures
       window.addEventListener("error", (e) => {
