@@ -1,0 +1,22 @@
+[package]
+name = "cats"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { version = "0.15", features = ["dynamic_linking"] }
+bevy_rapier3d = "0.28"
+bevy_egui = "0.31"
+rand = "0.8"
+rand_chacha = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+ron = "0.8"
+log = "0.4"
+wasm-bindgen = "0.2"
+egui_plot = "0.29" # Matching egui version for bevy_egui 0.31 presumably
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
