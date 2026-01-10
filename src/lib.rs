@@ -26,12 +26,16 @@ pub fn run() {
         .insert_resource(ClearColor(Color::srgb(0.53, 0.81, 0.92))) // Sky Blue
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                // Explicitly target a canvas with ID "bevy" to ensure correct attaching
                 canvas: Some("#bevy".into()), 
-                // Fill the parent (body)
                 fit_canvas_to_parent: true,
-                // Handle events
                 prevent_default_event_handling: false,
+                ..default()
+            }),
+            ..default()
+        }).set(RenderPlugin {
+            render_creation: wgpu::RenderCreation::Automatic(wgpu::WgpuSettings {
+                // Prioritize WebGL2 if WebGPU is flaky on this Mac
+                backends: Some(wgpu::Backends::PRIMARY | wgpu::Backends::GL),
                 ..default()
             }),
             ..default()

@@ -17,6 +17,7 @@ ron = "0.8"
 log = "0.4"
 wasm-bindgen = "0.2"
 egui_plot = "0.29" # Matching egui version for bevy_egui 0.31 presumably
+wgpu = { version = "23.0", features = ["webgl"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.3", features = ["wasm_js"] }
