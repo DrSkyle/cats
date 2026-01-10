@@ -19,6 +19,9 @@ pub fn run() {
     #[cfg(target_arch = "wasm32")]
     console_error_panic_hook::set_once();
 
+    #[cfg(target_arch = "wasm32")]
+    web_sys::console::log_1(&"RUST: App starting...".into());
+
     App::new()
         .insert_resource(ClearColor(Color::srgb(0.53, 0.81, 0.92))) // Sky Blue
         .add_plugins(DefaultPlugins.set(WindowPlugin {

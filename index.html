@@ -31,24 +31,45 @@
 
     <script type="module">
       const loading = document.getElementById("loading");
+      let startButton = null;
 
-      async function run() {
-        try {
-          // Dynamic import catches the 404 if the JS file itself is missing
-          const module = await import("./pkg/cats.js");
-          const init = module.default;
-          await init();
-          loading.style.display = "none";
-        } catch (err) {
-          console.error(err);
-          loading.style.color = "red";
-          loading.innerHTML =
-            "CRITICAL FAILURE (Load):<br>" +
-            err +
-            "<br><br>Check console for details.";
-        }
+      async function initGame() {
+          try {
+              loading.innerHTML = "Loading Engine...<br><span style='font-size:16px;color:#888'>Fetching WASM...</span>";
+              
+              const module = await import("./pkg/cats.js");
+              const init = module.default;
+              await init(); // Initialize WASM memory
+
+              loading.style.display = "none";
+              console.log("JS: WASM Initialized.");
+          } catch (err) {
+              console.error(err);
+              loading.style.color = "red";
+              loading.innerHTML = "CRITICAL FAILURE (Load):<br>" + err + "<br><br>Check console for details.";
+          }
       }
-      run();
+
+      // Create Start Button
+      function showStartButton() {
+          loading.innerHTML = "";
+          const btn = document.createElement("button");
+          btn.innerText = "CLICK TO START SIMULATION";
+          btn.style.padding = "20px 40px";
+          btn.style.fontSize = "24px";
+          btn.style.cursor = "pointer";
+          btn.style.background = "#fff";
+          btn.style.border = "none";
+          btn.style.borderRadius = "8px";
+          
+          btn.onclick = () => {
+              btn.remove();
+              initGame();
+          };
+          loading.appendChild(btn);
+      }
+
+      showStartButton();
 
       // Global error trap for resource loading failures
       window.addEventListener("error", (e) => {
