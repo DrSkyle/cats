@@ -20,10 +20,10 @@ pub fn run() {
     console_error_panic_hook::set_once();
 
     #[cfg(target_arch = "wasm32")]
-    web_sys::console::log_1(&"RUST: App starting...".into());
+    web_sys::console::log_1(&"RUST: App starting... Selecting Canvas #bevy".into());
 
     App::new()
-        .insert_resource(ClearColor(Color::srgb(0.53, 0.81, 0.92))) // Sky Blue
+        .insert_resource(ClearColor(Color::srgb(0.9, 0.0, 0.9))) // Hot Pink / Magenta for Debug
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 canvas: Some("#bevy".into()), 
@@ -32,10 +32,9 @@ pub fn run() {
                 ..default()
             }),
             ..default()
-        }).set(RenderPlugin {
-            render_creation: wgpu::RenderCreation::Automatic(wgpu::WgpuSettings {
-                // Prioritize WebGL2 if WebGPU is flaky on this Mac
-                backends: Some(wgpu::Backends::PRIMARY | wgpu::Backends::GL),
+        }).set(bevy::render::RenderPlugin {
+            render_creation: bevy::render::settings::RenderCreation::Automatic(bevy::render::settings::WgpuSettings {
+                backends: Some(bevy::render::settings::Backends::PRIMARY | bevy::render::settings::Backends::GL),
                 ..default()
             }),
             ..default()
